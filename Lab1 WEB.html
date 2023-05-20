@@ -1,0 +1,100 @@
+<body>
+	<style>
+        table {
+            border-collapse:collapse;
+            margin: auto;
+        }
+        td {
+            width: 25px;
+            height: 25px;
+        }
+        .black {
+            background: rgb(129, 188, 236);
+        }
+        .white {
+            background: rgb(213, 120, 225);
+		}
+    </style>
+	<script>
+		x = prompt(`What we will do`, 1)
+		switch(x) {
+		//ТУТ ИЗ ВВЕДЕННЫХ ЧИСЕЛ ИЩЕМ ТЕ, СУММА КВАДРАТОВ ЦИФР КОТОРЫХ ДЕЛЯТСЯ НА 6
+			case '1':
+				let a = 0;
+				let b = 0;
+				let arr = [];
+				do {
+					if (a < 0) a = -a;
+					let i = 0;
+					let sum = 0;
+					while (a > 1){
+						a = parseInt(a);
+						
+						i++;
+						let tmp = a % 10;
+						sum += tmp * tmp;
+						a /= 10;
+					}
+					if (i == 3 && sum % 6 == 0) {
+						arr.push(b);
+					}				
+					a = prompt('Enter a number');
+					b = a;
+				} while (!(isNaN(parseFloat(a)) || !isFinite(a)))
+				document.write(`Result is: ${arr.join(' ')}`);
+				break;
+        //ТУТ У НАС РИСУНОК МАТРИЦЫ
+			case '2':
+			let n = prompt('n = ');
+        	if (isNaN(parseFloat(n)) || !isFinite(n) || n < 2 || n > 15 || Number.isInteger(n)){
+           		alert('Ошибочное число');
+       	    } else
+            document.write('<hr width="100%">');
+            let size = 100;
+            for(let i = 1; i < n; i++)
+            {
+                size -= 100/n; 
+                document.write('<hr width="' + size + '%">');
+            }
+            let str = '<table>';
+            let flag = true;
+            let numb;
+            let meter  = 0;
+            for (let i = 0; i < n; i++)
+            {
+                str += '<tr>';
+                for (let g = 0; g < n; g++) {
+                    //if (i == 0) numb = 1;
+					if (g <= n / 2 && i <= n / 2) numb = g <= i ? (i == g && i + g == n) ? i : g + 1 : i + 1;
+					if (g <= n / 2 && i > n / 2) numb = n - i - 1 <= g ? n - i: g + 1;
+					if (g > n / 2 && i <= n / 2) numb = n - g - 1 <= i ? n - g: i + 1;
+					if (g > n / 2 && i > n / 2) numb = n - g <= n - i ? n - g: n - i;
+                    let classTd = (numb % 2 == 1) ? 'black' : 'white'; 
+                    str += `<td class="${ classTd }">${numb}</td>`;
+                }
+                str += `</tr>`;
+            }
+            document.write(str + '</table>');
+            document.write('<hr width="' + size + '%">');
+            for(let i = 1; i < n; i++)
+            {
+                size += 100/n; 
+                document.write('<hr width="' + size + '%">');
+            }
+				break;
+		//ТУТ ИЗ СТРОКИ ВЫБИРАЕМ СЛОВА, ЗА КОТОРЫМИ ИДУТ ЧИСЛА + ЭТИ ЧИСЛА
+			case '3':
+			    let stre = prompt('Enter a string');
+				stre = stre.split(' ');
+				let newStr = '';
+				for (let i = 1; i < stre.length; i++)
+					if (!(isNaN(parseFloat(stre[i])) || !isFinite(stre[i])) && (isNaN(parseFloat(stre[i - 1])) || !isFinite(stre[i - 1])))
+						newStr += stre[i -1] + ' ' + stre[i] + ' ';
+				document.write(`New string is: ${newStr}`);
+				break;
+			default:
+				alert('Wrong input');
+				break;
+		}
+	</script>
+ </body>
